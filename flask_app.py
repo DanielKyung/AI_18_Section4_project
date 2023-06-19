@@ -1,9 +1,16 @@
 from flask import Flask, request, render_template, redirect
 import joblib
+#import pickle
 import json
 import pandas as pd
+# 콘다 가상환경 python=3.10에서 작업
 
 app = Flask(__name__)
+
+"""
+with open('./models/apart_sale_xgb_model_P3_10.pkl', 'rb') as file:
+    reg_model = pickle.load(file)
+"""
 
 reg_model = joblib.load('./models/apart_sale_xgb_model.pkl')
 
@@ -44,6 +51,7 @@ def predict_web():
     # 예측 결과를 HTML로 전달
     return render_template('index.html', prediction=prediction)
 
+# 대시보드 보기
 @app.route('/dashboard', methods=['GET','POST'])
 def redirect_to_dashboard():
     return redirect("http://127.0.0.1:3000/dashboard/3-project4", code=302)
